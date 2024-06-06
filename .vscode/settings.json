@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "rmt_tx.h": "c",
+        "dshot_esc_encoder.h": "c",
+        "rmt_encoder.h": "c",
+        "freertos.h": "c"
+    }
+}
