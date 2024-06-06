@@ -31,13 +31,13 @@ To control each motor, follow these steps:
 ```cpp
 #include "Rmt_dshot_esc.h"
 
-// Creating motor instances
-Rmt_dshot_esc motor_1;
-Rmt_dshot_esc motor_2;
-Rmt_dshot_esc motor_3;
-Rmt_dshot_esc motor_4;
+extern "C" void app_main(void) {
+    // Creating motor instances
+    Rmt_dshot_esc motor_1;
+    Rmt_dshot_esc motor_2;
+    Rmt_dshot_esc motor_3;
+    Rmt_dshot_esc motor_4;
 
-void setup() {
     // Configuring RMT channels for each motor
     motor_1.create_rmt_tx_channel(RMT_CLK_SRC_DEFAULT, PIN_MOTOR_1, 64, DSHOT_ESC_RESOLUTION_HZ, 10);
     motor_2.create_rmt_tx_channel(RMT_CLK_SRC_DEFAULT, PIN_MOTOR_2, 64, DSHOT_ESC_RESOLUTION_HZ, 10);   
@@ -55,9 +55,7 @@ void setup() {
     motor_2.start_esc(false);
     motor_3.start_esc(false);
     motor_4.start_esc(true);
-}
 
-void loop() {
     // Varying motor throttle
     for (uint16_t throttle = 70; throttle < 200; throttle += 10) {
         motor_1.define_throttle(throttle);
