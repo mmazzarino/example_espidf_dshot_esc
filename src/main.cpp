@@ -13,7 +13,6 @@
 
 
 extern "C" void app_main(void) {
-
     Rmt_dshot_esc motor_1;
     Rmt_dshot_esc motor_2;
     Rmt_dshot_esc motor_3;
@@ -26,9 +25,6 @@ extern "C" void app_main(void) {
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
     gpio_config(&io_conf);
 
-
-    // vTaskDelay(pdMS_TO_TICKS(1000));
-
     motor_1.create_rmt_tx_channel(RMT_CLK_SRC_DEFAULT, PIN_MOTOR_1, 64, DSHOT_ESC_RESOLUTION_HZ, 4, USE_DMA, 0);
     motor_2.create_rmt_tx_channel(RMT_CLK_SRC_DEFAULT, PIN_MOTOR_2, 64, DSHOT_ESC_RESOLUTION_HZ, 4, USE_DMA, 0);   
     motor_3.create_rmt_tx_channel(RMT_CLK_SRC_DEFAULT, PIN_MOTOR_3, 64, DSHOT_ESC_RESOLUTION_HZ, 4, USE_DMA, 0);
@@ -39,27 +35,27 @@ extern "C" void app_main(void) {
     motor_3.install_dshot_esc_encoder(DSHOT_PROTOCOL_HZ, DSHOT_PROTOCOL_POST_DELAY_US);
     motor_4.install_dshot_esc_encoder(DSHOT_PROTOCOL_HZ, DSHOT_PROTOCOL_POST_DELAY_US);
 
-    // vTaskDelay(pdMS_TO_TICKS(1000));
-
     motor_1.start_esc(false);
     motor_2.start_esc(false);
     motor_3.start_esc(false);
     motor_4.start_esc(true);
     
+    while (1) {
+        
+        for (uint16_t thro = 70; thro < 800; thro += 10) {
+            motor_1.define_throttle((uint16_t) thro);
+            motor_2.define_throttle((uint16_t) thro);
+            motor_3.define_throttle((uint16_t) thro);
+            motor_4.define_throttle((uint16_t) thro);
+            vTaskDelay(pdMS_TO_TICKS(250));
+        }
 
-    for (uint16_t thro = 70; thro < 800; thro += 10) {
-        motor_1.define_throttle((uint16_t) thro);
-        motor_2.define_throttle((uint16_t) thro);
-        motor_3.define_throttle((uint16_t) thro);
-        motor_4.define_throttle((uint16_t) thro);
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
-
-    for (uint16_t thro = 800; thro > 70; thro -= 10) {
-        motor_1.define_throttle((uint16_t) thro);
-        motor_2.define_throttle((uint16_t) thro);
-        motor_3.define_throttle((uint16_t) thro);
-        motor_4.define_throttle((uint16_t) thro);
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        for (uint16_t thro = 800; thro > 70; thro -= 10) {
+            motor_1.define_throttle((uint16_t) thro);
+            motor_2.define_throttle((uint16_t) thro);
+            motor_3.define_throttle((uint16_t) thro);
+            motor_4.define_throttle((uint16_t) thro);
+            vTaskDelay(pdMS_TO_TICKS(250));
+        }
     }
 }
