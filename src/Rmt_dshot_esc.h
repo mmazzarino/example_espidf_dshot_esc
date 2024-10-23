@@ -40,7 +40,7 @@ class Rmt_dshot_esc {
     public:
         Rmt_dshot_esc();
         // ~Rmt_dshot_esc();
-        void create_rmt_tx_channel(rmt_clock_source_t rmt_clk_src, gpio_num_t pin_dshot, size_t mem_block_symbols, uint32_t dshot_esc_resolution_hz, size_t trans_queue_depth);
+        void create_rmt_tx_channel(rmt_clock_source_t rmt_clk_src, gpio_num_t pin_dshot, size_t mem_block_symbols, uint32_t dshot_esc_resolution_hz, size_t trans_queue_depth, uint8_t use_dma, uint8_t priority);
         void install_dshot_esc_encoder(uint32_t dshot_protocol_hz, uint32_t post_delay_us);
         void start_esc(bool is_the_last_motor);
         void define_throttle(uint16_t throttle_value);
